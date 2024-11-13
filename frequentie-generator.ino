@@ -61,16 +61,28 @@ byte signalMeterRemapPrevious;      // Global: The previous re-map value, set in
 
 byte  rotaryDirection = 1;          // Global: Value set by the rotary. Given the direction 1 = clockwise -1 = bandSelectorValueer clockwise
 byte  tuneStepValue=4;              // Global: Value set by the tune step push button
-char* tuneStepDisplay = " 1kHz";    // Global: The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
+char* tuneStepDisplay ;             // Global: The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
 byte  tunePointer = 1;              // Global: Up/Down graph tune pointer, set by set_frequency()
 
 byte  bandSelectorValue = BAND_INIT;// Global: Default set by BAND_INIT otherwise set by the  band selector push button.
 char* bandSelectorTypeDisplay;      // Global: The band name for the Display. ex: GEN, MW, 160m 80m etc.
 
 bool  rxtxSwitch = false;           // Global: The status of the  RX / TX selector switch
-char* rxtxDisplay = "RX";           // Global: RX or TX  
+char* rxtxDisplay;           // Global: RX or TX  
 
 long calibrationFactor = XT_CAL_F;  // Global: Si5351 calibration factor, adjust to get exatcly 10MHz. Increasing this value will decreases the frequency and vice versa.
+
+byte               tuneStepValues[7]  = {0,2,3,4,5,6,1};
+long int           frequencySteps[7]  = {0,1,10,1000,5000,10000,1000000};
+char const * const tuneStepsDisplay[] = {"   ", "  1Hz"," 10Hz"," 1kHz"," 5kHz","10kHz"," 1MHz"};
+
+const long int frequencies[22]        = {1,100000,800000,1800000,3650000,4985000,6180000,7200000,10000000,11780000,13630000,14100000,
+                                 15000000,17655000,21525000,27015000,28400000,50000000,100000000,130000000,144000000,220000000 };
+
+/*
+char const * const bandSelectorTypes[]= {"XXX ", "GEN ", "MW  ", "160m", "80m ", "60m ", "49m ", "40m ", "31m ", "25m ", "22m ", "20m ", 
+                                         "19m ", "16m ", "13m ", "11m ", "10m ", "6m  " ,"WFM ", "AIR ", "2m  " , "1m "};
+*/
 
 /***************************************************************************************/
 /*! @brief  Set the frequency started by de interupt handler.
@@ -124,22 +136,18 @@ void setSi5251Frequency() {
 /*! @brief  Set step to new step  and frequency steps to new frequency step depending on global variable tuneStepValue */
 /***********************************************************************************************************************/
 void setStep() {
-  switch (tuneStepValue) {
-    case 1: tuneStepValue = 2; frequencyStep = 1;       tuneStepDisplay=(char*)"  1Hz"; break;
-    case 2: tuneStepValue = 3; frequencyStep = 10;      tuneStepDisplay=(char*)" 10Hz";  break;
-    case 3: tuneStepValue = 4; frequencyStep = 1000;    tuneStepDisplay=(char*)" 1kHz"; break;
-    case 4: tuneStepValue = 5; frequencyStep = 5000;    tuneStepDisplay=(char*)" 5kHz"; break;
-    case 5: tuneStepValue = 6; frequencyStep = 10000;   tuneStepDisplay=(char*)"10kHz"; break;
-    case 6: tuneStepValue = 1; frequencyStep = 1000000; tuneStepDisplay=(char*)" 1MHz"; break;
-  }
+  tuneStepValue   = tuneStepValues[tuneStepValue];
+  frequencyStep   = frequencySteps[tuneStepValue];
+  tuneStepDisplay = tuneStepsDisplay[tuneStepValue];
 }
 
 /*****************************************************************************************/
 /*! @brief  Set frequency to new frequency depending on the global variable bandSelector */
 /*****************************************************************************************/
 void setFrequencyPresets() {
+
   switch (bandSelectorValue)  {
-    case 1: frequency = 100000;     bandSelectorTypeDisplay = (char*)"GEN" ; setSi5251Frequency(); interFrequency= 0; break;
+    case 1: frequency = 100000;     bandSelectorTypeDisplay = (char*)"GEN" ; break;
     case 2: frequency = 800000;     bandSelectorTypeDisplay = (char*)"MW"  ; break;
     case 3: frequency = 1800000;    bandSelectorTypeDisplay = (char*)"160m";break;
     case 4: frequency = 3650000;    bandSelectorTypeDisplay = (char*)"80m" ;break;
@@ -161,6 +169,7 @@ void setFrequencyPresets() {
     case 20: frequency = 144000000; bandSelectorTypeDisplay = (char*)"2m" ;break;
     case 21: frequency = 220000000; bandSelectorTypeDisplay = (char*)"1m" ;break;
   }
+
   if (frequency< 1000000) { 
     frequencyDisplay = (char*)"kHz";
   } else {
@@ -200,7 +209,11 @@ void setDisplayFormatedFrequency() {
 /*****************************************************************************************/
 void setBandSelector() {
   bandSelectorValue++;
-  if (bandSelectorValue > 21) bandSelectorValue = 1;
+  if (bandSelectorValue > 21) { 
+      bandSelectorValue = 1;
+      setSi5251Frequency(); 
+      interFrequency= 0; 
+  }          
   setFrequencyPresets();
   delay(50);
 }
