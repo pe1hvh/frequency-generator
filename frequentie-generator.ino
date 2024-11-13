@@ -76,13 +76,13 @@ byte               tuneStepValues[7]  = {0,2,3,4,5,6,1};
 long int           frequencySteps[7]  = {0,1,10,1000,5000,10000,1000000};
 char const * const tuneStepsDisplay[] = {"   ", "  1Hz"," 10Hz"," 1kHz"," 5kHz","10kHz"," 1MHz"};
 
-const long int frequencies[22]        = {1,100000,800000,1800000,3650000,4985000,6180000,7200000,10000000,11780000,13630000,14100000,
+long unsigned int              frequencies[22] = {1,100000,800000,1800000,3650000,4985000,6180000,7200000,10000000,11780000,13630000,14100000,
                                  15000000,17655000,21525000,27015000,28400000,50000000,100000000,130000000,144000000,220000000 };
 
-/*
+
 char const * const bandSelectorTypes[]= {"XXX ", "GEN ", "MW  ", "160m", "80m ", "60m ", "49m ", "40m ", "31m ", "25m ", "22m ", "20m ", 
                                          "19m ", "16m ", "13m ", "11m ", "10m ", "6m  " ,"WFM ", "AIR ", "2m  " , "1m "};
-*/
+
 
 /***************************************************************************************/
 /*! @brief  Set the frequency started by de interupt handler.
@@ -141,6 +141,7 @@ void setStep() {
   tuneStepDisplay = tuneStepsDisplay[tuneStepValue];
 }
 
+
 /*****************************************************************************************/
 /*! @brief  Set frequency to new frequency depending on the global variable bandSelector */
 /*****************************************************************************************/
@@ -169,7 +170,8 @@ void setFrequencyPresets() {
     case 20: frequency = 144000000; bandSelectorTypeDisplay = (char*)"2m" ;break;
     case 21: frequency = 220000000; bandSelectorTypeDisplay = (char*)"1m" ;break;
   }
-
+//frequency               = frequencies[bandSelectorValue]; //don't work
+//bandSelectorTypeDisplay = bandSelectorTypes[bandSelectorValue]; // don't work
   if (frequency< 1000000) { 
     frequencyDisplay = (char*)"kHz";
   } else {
