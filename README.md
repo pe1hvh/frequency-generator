@@ -1,5 +1,6 @@
-# 10khz to 225mhz vfo rf generator
-  ==============================
+10khz to 225mhz vfo rf generator
+==================================
+
   Original source: https://create.arduino.cc/projecthub/CesarSound/10khz-to-225mhz-vfo-rf-generator-with-si5351-version-2-bfa619?ref=user&ref_id=1465945&offset=1
   10kHz to 225MHz VFO / RF Generator with Si5351 and Arduino Nano, with Intermediate Frequency (IF) offset
   (+ or -), RX/TX Selector for QRP Transceivers, Band Presets and Bargraph S-Meter. See the schematics for
@@ -8,7 +9,7 @@
   Forked by PE1HVH for a project done by the de VERON Afdeling 49/VRZA Afdeling 22.
   
   Changes   
-  --------
+  -------
    * refactored-code
    * given all variables meaningful names
    * standard lowerCamelCase nameconvention
@@ -18,7 +19,7 @@
    * comment code 
 
   PlatformIO
-  ---------
+  ----------
   While using PlatformIO with Visual Code as IDE, I have to re-order the function.
   
   PlatformIO requires that functions be declared before they are called in the code. This is because PlatformIO uses a more standard C++ compilation process,
