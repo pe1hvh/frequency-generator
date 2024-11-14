@@ -166,8 +166,8 @@ void setFrequencyPresets() {
   } else {
     frequencyDisplay = (char*)"MHz";
   }
-  frequencyStep = 4; 
-   setStep();
+  tuneStepValue = 4; 
+  setStep();
 }
 
 /**************************************************************************************/
@@ -265,7 +265,6 @@ void setDisplayTemplate() {
   display.display();
 }
 
-
 /*******************************************************************************************************/
 /*! @brief  Read ADC set the value to 8 bits var signalMeterRemap and bound the value between 0 and 14 */
 /*******************************************************************************************************/
@@ -276,8 +275,6 @@ void readSignalMeterADC() {
     signalMeterRemap = 14;
   }  
 }
-
-
 
 /**********************************************************************/
 /*! @brief  set the Initial text on display                           */
@@ -326,6 +323,7 @@ void setup() {
   PCICR |= (1 << PCIE2);
   PCMSK2 |= (1 << PCINT18) | (1 << PCINT19);
   sei();
+  tuneStepValue = 4;
   setFrequencyPresets();
 }
 
