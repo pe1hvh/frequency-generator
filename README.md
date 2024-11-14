@@ -35,3 +35,9 @@
   ------
   Build and Upload is tested also with Arduino IDE 2.3 and Arduino 1.8.19. 
   
+  Compatible
+  ----------
+  To avoid compatibility issues, the source is saved as an arduino.ino file
+  
+
+  
