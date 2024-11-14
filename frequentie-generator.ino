@@ -135,7 +135,7 @@ void setSi5251Frequency() {
 /***********************************************************************************************************************/
 /*! @brief  Set step to new step  and frequency steps to new frequency step depending on global variable tuneStepValue */
 /***********************************************************************************************************************/
-void setStep() {
+void setTuneStep() {
   tuneStepValue   = tuneStepValues[tuneStepValue];
   frequencyStep   = frequencySteps[tuneStepValue];
   tuneStepDisplay = tuneStepsDisplay[tuneStepValue];
@@ -177,8 +177,8 @@ void setFrequencyPresets() {
   } else {
     frequencyDisplay = (char*)"MHz";
   }
-  frequencyStep = 4; 
-   setStep();
+  tuneStepValue = 4; 
+  setTuneStep();
 }
 
 /**************************************************************************************/
@@ -342,6 +342,8 @@ void setup() {
   PCMSK2 |= (1 << PCINT18) | (1 << PCINT19);
   sei();
   setFrequencyPresets();
+  tuneStepValue = 4; 
+  setTuneStep();
 }
 
 /******************************************************************************/
@@ -375,7 +377,7 @@ void loop() {
   }
 
   if (digitalRead(tunestep) == LOW) {
-    setStep();
+    setTuneStep();
     delay(300);
   }
 
