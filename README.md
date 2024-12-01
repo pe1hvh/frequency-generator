@@ -17,7 +17,12 @@
    * standard formating
    * cleancode (so far as possible)
    * comment code 
-
+  Version 3.0 december 2024
+   * redesign of the code
+   * add lookup array's and removing the switch statements
+   * put all the declarations in a header file
+   * build a display class
+   
   PlatformIO
   ----------
   While using PlatformIO with Visual Code as IDE, I have to re-order the function.
