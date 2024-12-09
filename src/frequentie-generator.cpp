@@ -20,12 +20,13 @@
 #include <Wire.h>                  // Allows the communication between devices or sensors connected via Two Wire Interface Bus. Specific implementation for nRF52. This Library is needed for si5341 https://docs.arduino.cc/language-reference/en/functions/communication/Wire/
 #include <Rotary.h>                // Arduino library for reading rotary directions that output a 2-bit gray code. Ben  Buxton https://github.com/brianlow/Rotary
 #include <si5351.h>                // A full-featured library for the Si5351 series of clock generator ICs from Silicon Labs  https://github.com/etherkit/Si5351Arduino
-#define IF         455             //Enter your IF frequency, ex: 455 = 455kHz, 10700 = 10.7MHz, 0 = to direct convert receiver or RF generator, + will add and - will subtract IF offfset.
+#define IF         455             // Enter your IF frequency, ex: 455 = 455kHz, 10700 = 10.7MHz, 0 = to direct convert receiver or RF generator, + will add and - will subtract IF offfset.
+
 //User librarys
 #include "maintain-data.h"         // Handles the digital input
 #include "display-handler.h"       // Display class   
 #include "rotary-handler.h"        // Handles the Interrupts
-#include "buttons-handler.h"       // Handles the Buttons
+#include "input-handler.h"       // Handles the Buttons
 #include "si5351-handler.h"        // Handles the si5351  
 
 
@@ -68,7 +69,7 @@ void loop() {
   checkButtonBandSelector(); 
 
   MySi5251::si5251Manager.checkSi5251Changes( MyData::dataManager.getFrequency(),
-                                              MyData::dataManager.getInterFrequency());
+                                              MyData::dataManager.getInterFrequency() );
 
   MyDisplay::displayManager.setTemplate(  MyData::dataManager.getTuneStepValue(), 
                                           MyData::dataManager.getInterFrequency(), 
@@ -76,10 +77,6 @@ void loop() {
                                           MyData::dataManager.getBandSelector(),
                                           MyData::dataManager.getRxTxSwitch(), 
                                           MyData::dataManager.getTunePointer(), 
-                                          MyData::dataManager.getSignalMeterRemap() 
-                                          );
-                                       
-                                    
-
+                                          MyData::dataManager.getSignalMeterRemap() );
 }
 //EOF

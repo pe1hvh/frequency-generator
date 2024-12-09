@@ -77,7 +77,6 @@ namespace MyDisplay {
             timeNow = millis();
         }
         
-        
         /***************************************************************************************/
         /*! @brief  Start text to screen to display                                            */
         /***************************************************************************************/
@@ -86,7 +85,7 @@ namespace MyDisplay {
             display.setCursor(13, 18);
             display.print("Si5351 VFO/RF GEN");
             display.setCursor(6, 40);
-            display.print("JCR RADIO - Ver 2.0");
+            display.print("JCR RADIO - Ver 3.0");
             display.display();
             delay(2000);
         }

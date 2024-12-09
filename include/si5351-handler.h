@@ -17,6 +17,9 @@ class Si5251Handler {
     
     public:
 
+        /**************************************************************************************/
+        /*! @brief  Set the inital values for the si5351                                      */
+        /**************************************************************************************/
         void init() {
 
             si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0);
@@ -29,7 +32,7 @@ class Si5251Handler {
         }   
 
         /**************************************************************************************/
-        /*! @brief  Set the frequentie for clock0 using 
+        /*! @brief  Set the frequenty for clock0 using 
             @param  freq the current frequencyd 
             @param  interFreq the current inter frequencyy 
         */
@@ -39,7 +42,10 @@ class Si5251Handler {
         }
 
         /******************************************************************************/
-        /*! @brief  Check if frequency or interFrequency changed                      */
+        /*! @brief  Check if frequency or interFrequency changed  
+            @param  freq the current frequencyd 
+            @param  interFreq the current inter frequencyy                    
+        */
         /******************************************************************************/
         void checkSi5251Changes(unsigned long freq, long  interFreq){
             if (frequencyPrevious != freq || interFrequencyPrevious != interFreq ) {

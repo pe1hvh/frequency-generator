@@ -11,6 +11,20 @@ void initButtonTuneStep() {
      pinMode(tunestep, INPUT_PULLUP);
 }   
 
+/************************************************* */
+/*! @brief Initialize Band Selector Button         */
+/************************************************* */
+void initButtonBandSelector() {
+     pinMode(band, INPUT_PULLUP);
+}    
+
+/************************************************* */
+/*! @brief Initialize Rx Tx Button                 */
+/************************************************* */
+void initButtonRxTx() {
+      pinMode(rx_tx, INPUT_PULLUP);
+}   
+
 /************************************************************************** */
 /*! @brief if TunestepButton pressed  set tunestepvalue and frequencystep   */
 /************************************************************************** */
@@ -20,13 +34,6 @@ void checkButtonTuneStep() {
             delay(300);
       }       
 }
-
-/************************************************* */
-/*! @brief Initialize Band Selector Button         */
-/************************************************* */
-void initButtonBandSelector() {
-     pinMode(band, INPUT_PULLUP);
-}    
 
 /************************************************************************** */
 /*! @brief if Bandselector pressed  set frequency  and   bandselector value
@@ -38,13 +45,6 @@ void checkButtonBandSelector() {
          delay(300);
       }
 }
-
-/************************************************* */
-/*! @brief Initialize Rx Tx Button                 */
-/************************************************* */
-void initButtonRxTx() {
-      pinMode(rx_tx, INPUT_PULLUP);
-}   
 
 /**************************************************************************** */
 /*! @brief if RxTx button  pressed  set rxtxSwitch  and  interFrequency value */
@@ -61,5 +61,5 @@ void checkButtonRxTx() {
 /*! @brief read the analog signal for the signal meter                        */
 /**************************************************************************** */
 void readSignalMeterADC() {
-        MyData::dataManager.setAnalogRead(analogRead(adc));
-}         
+        MyData::dataManager.setByAnalogRead(analogRead(adc));
+}   
