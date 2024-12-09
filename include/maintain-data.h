@@ -20,7 +20,7 @@ namespace MyData {
             uint8_t signalMeterRemap ;               // Remapped and bounded value
             // end block variable used by the getters
 
-            unsigned long frequencyStep = 10;        //The frequency step ex: 1, 10, 1000, 5000, 10000 set by tunestepvalue
+            unsigned long frequencyStep = 10;               //The frequency step ex: 1, 10, 1000, 5000, 10000 set by tunestepvalue
             byte  tuneStepValues[7]     = {0,2,3,4,5,6,1};  //The next tunestepValues set by tuneStepValue
             int adc;                                        //ADC pin number
             const int signalGain        = 303;              //Maximum ADC value

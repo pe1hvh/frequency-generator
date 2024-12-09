@@ -26,7 +26,7 @@
 #include "maintain-data.h"         // Handles the digital input
 #include "display-handler.h"       // Display class   
 #include "rotary-handler.h"        // Handles the Interrupts
-#include "input-handler.h"       // Handles the Buttons
+#include "input-handler.h"         // Handles the Buttons
 #include "si5351-handler.h"        // Handles the si5351  
 
 
