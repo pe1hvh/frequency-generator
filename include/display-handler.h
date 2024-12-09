@@ -1,6 +1,9 @@
+#include <avr/pgmspace.h>          // needed for to story large array's
 #include <Adafruit_GFX.h>          // Adafruit GFX graphics core library, this is the 'core' class that all our other graphics libraries derive from. https://github.com/adafruit/Adafruit-GFX-Library
 #include <Adafruit_SSD1306.h>      // SSD1306 oled driver library for monochrome 128x64 and 128x32 displays https://github.com/adafruit/Adafruit_SSD1306
-#include <Wire.h>                  // Allows the communication between devices or sensors connected via Two Wire Interface Bus. Specific implementation for nRF52. This Library is needed for si5341 https://docs.arduino.cc/language-reference/en/functions/communication/Wire/
+
+Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire); // Initialize Adafruit_SSD1306 object (Type Adafruit_SSD1306) width 128 pixels hight 64 pixels, using the Wire object(library) by reference
+
 
 namespace MyDisplay {
 
@@ -36,21 +39,26 @@ namespace MyDisplay {
     const char   display_band_19[] PROGMEM = "AIR  ";
     const char   display_band_20[] PROGMEM = "2m   ";    
     const char   display_band_21[] PROGMEM = "1m   ";
-    const char * const  PROGMEM displayBand[] = { display_band_00,display_band_01,display_band_02,display_band_03,display_band_04,
+    const char * const  PROGMEM displayBand[] = {
+                                                display_band_00,display_band_01,display_band_02,display_band_03,display_band_04,
                                                 display_band_05,display_band_06,display_band_07,display_band_08,display_band_09,
                                                 display_band_10,display_band_11,display_band_12,display_band_13,display_band_14,
                                                 display_band_15,display_band_16,display_band_17,display_band_18,display_band_19,
-                                                display_band_20,display_band_21};
+                                                display_band_20,display_band_21
+                                                };
 
 
     class Display {
- 
-    char  bandSelectorTypeDisplay[6];   // Global: The band name for the Display. ex: GEN, MW, 160m 80m etc. 
-    char  tuneStepDisplay[7];           // Global: The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
 
+    private:
+
+        unsigned long timeNow = 0;          // The current time
+        unsigned int period = 100;          // Used for calculation the performance time .
+        char  bandSelectorTypeDisplay[6];   // The band name for the Display. ex: GEN, MW, 160m 80m etc. 
+        char  tuneStepDisplay[7];           // The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
+   
     public:
-        Display() {}
-        
+               
         /***************************************************************************************/
         /*! @brief  Initial setup op the display                                               */
         /***************************************************************************************/
@@ -61,11 +69,19 @@ namespace MyDisplay {
             display.setTextColor(WHITE);
             display.display();
         }
+
+        /***************************************************************************************/
+        /*! @brief  Initial timesetup                                                          */
+        /***************************************************************************************/
+        void setTimeNow() {
+            timeNow = millis();
+        }
+        
         
         /***************************************************************************************/
         /*! @brief  Start text to screen to display                                            */
         /***************************************************************************************/
-        void showStartupText() {
+        void setStartupText() {
             display.setTextSize(1);
             display.setCursor(13, 18);
             display.print("Si5351 VFO/RF GEN");
@@ -86,54 +102,57 @@ namespace MyDisplay {
             @param  signalMeterRemap       The signal meter remap 
         */
         /***************************************************************************************/
-        void showTemplate(byte tuneStepValue, 
+        void setTemplate(
+                        byte tuneStepValue, 
                         int interFrequency, 
                         unsigned long frequency,
                         byte bandSelectorValue,
                         bool rxtxSwitch, 
                         byte tunePointer, 
                         byte signalMeterRemap) {
-            showFormattedFrequency(frequency);    
-            strcpy_P(bandSelectorTypeDisplay, (PGM_P)pgm_read_word(&displayBand[bandSelectorValue]));    
-            strcpy_P(tuneStepDisplay, (PGM_P)pgm_read_word(&tuneStepsDisplay[tuneStepValue]));  
-            
-            display.setTextColor(WHITE);
-            display.drawLine(0, 20, 127, 20, WHITE);
-            display.drawLine(0, 43, 127, 43, WHITE);
-            display.drawLine(105, 24, 105, 39, WHITE);
-            display.drawLine(87, 24, 87, 39, WHITE);
-            display.drawLine(87, 48, 87, 63, WHITE);
-            display.drawLine(15, 55, 82, 55, WHITE);
-            
-            display.setTextSize(1);
-            display.setCursor(59, 23);
-            display.print("STEP");
-            display.setCursor(54, 33);
-            display.print(tuneStepDisplay);
-            
-            display.setCursor(92, 48);
-            display.print("IF:");
-            display.setCursor(92, 57);
-            display.print(interFrequency);
-            display.print("k");
-            
-            display.setCursor(110, 23);
-            display.print(setFrequencyDisplay(frequency));
-            display.setCursor(110, 33);
-            display.print(setInterFrequentieDisplay(interFrequency));
-            display.setCursor(91, 28);
-            display.print(setRxTxDisplay(rxtxSwitch));
-            
-            display.setTextSize(2);
-            display.setCursor(0, 25);
-            display.print(bandSelectorTypeDisplay);
-            showBargraph(tunePointer,signalMeterRemap);
-            display.display();
+                          
+            if(timeNow + period > millis()) {
+                setFormattedFrequency(frequency);    
+                strcpy_P(bandSelectorTypeDisplay, (PGM_P)pgm_read_word(&displayBand[bandSelectorValue]));    
+                strcpy_P(tuneStepDisplay, (PGM_P)pgm_read_word(&tuneStepsDisplay[tuneStepValue]));  
+                
+                display.setTextColor(WHITE);
+                display.drawLine(0, 20, 127, 20, WHITE);
+                display.drawLine(0, 43, 127, 43, WHITE);
+                display.drawLine(105, 24, 105, 39, WHITE);
+                display.drawLine(87, 24, 87, 39, WHITE);
+                display.drawLine(87, 48, 87, 63, WHITE);
+                display.drawLine(15, 55, 82, 55, WHITE);
+                
+                display.setTextSize(1);
+                display.setCursor(59, 23);
+                display.print("STEP");
+                display.setCursor(54, 33);
+                display.print(tuneStepDisplay);
+                
+                display.setCursor(92, 48);
+                display.print("IF:");
+                display.setCursor(92, 57);
+                display.print(interFrequency);
+                display.print("k");
+                
+                display.setCursor(110, 23);
+                display.print(setFrequencyDisplay(frequency));
+                display.setCursor(110, 33);
+                display.print(setInterFrequentieDisplay(interFrequency));
+                display.setCursor(91, 28);
+                display.print(setRxTxDisplay(rxtxSwitch));
+                
+                display.setTextSize(2);
+                display.setCursor(0, 25);
+                display.print(bandSelectorTypeDisplay);
+                setBargraph(tunePointer,signalMeterRemap);
+                display.display();
+            }    
         }
         
-
+   
     private:
-        Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire); // Initialize Adafruit_SSD1306 object (Type Adafruit_SSD1306) width 128 pixels hight 64 pixels, using the Wire object(library) by reference
 
 
         /***************************************************************************************/
@@ -190,7 +209,7 @@ namespace MyDisplay {
             @param singalMeterRemap  The recalculated tune pointer
         */
         /***************************************************************************************/
-        void showBargraph(byte tunePointer, byte signalMeterRemap) {
+        void setBargraph(byte tunePointer, byte signalMeterRemap) {
             byte y = map(tunePointer, 1, 42, 1, 14);
             display.setTextSize(1);
             display.setCursor(0, 48);
@@ -209,7 +228,7 @@ namespace MyDisplay {
             @param  frequency        The current frequency 
         */
         /***************************************************************************************/
-        void showFormattedFrequency(unsigned long frequency) {
+        void setFormattedFrequency(unsigned long frequency) {
             unsigned int m = frequency / 1000000;
             unsigned int k = (frequency % 1000000) / 1000;
             unsigned int h = (frequency % 1000) / 1;

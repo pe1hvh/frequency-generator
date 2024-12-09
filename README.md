@@ -17,11 +17,12 @@
    * standard formating
    * cleancode (so far as possible)
    * comment code 
+   
   Version 3.0 december 2024
    * redesign of the code
    * add lookup array's and removing the switch statements
-   * put all the declarations in a header file
-   * build a display class
+   * using namespaces and build classes to give this project a clear structure
+   
    
   PlatformIO
   ----------
@@ -35,10 +36,6 @@
   For writing cleancode, the Sonarlint plug-in is installed in Visual Code. 
   SonarLint is an open-source code analysis tool that serves several important functions to help developers write cleaner, safer, and higher-quality code. 
   There is no need, for using all sonarlint rules but the most important are enabled.
-  
-  Tested
-  ------
-  Build and Upload is tested also with Arduino IDE 2.3 and Arduino 1.8.19. 
   
   Compatible
   ----------
