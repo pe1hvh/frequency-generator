@@ -1,3 +1,6 @@
+#define IF         455             // Enter your IF frequency, ex: 455 = 455kHz, 10700 = 10.7MHz, 0 = to direct convert receiver or RF generator, + will add and - will subtract IF offfset.
+
+
 namespace MyData {
 
     const unsigned long frequencySteps[7]   PROGMEM = {0UL,1UL,10UL,1000UL,5000UL,10000UL,1000000UL};     // the frequencySteps corrersponding by the steps    
@@ -149,8 +152,7 @@ namespace MyData {
                     signalMeterRemap = 14;
                 }
             }
-  
-
-    };
+      };
+      
     Data dataManager;
 }

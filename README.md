@@ -10,19 +10,9 @@
   
   Changes   
   -------
-   * refactored-code
-   * given all variables meaningful names
-   * standard lowerCamelCase nameconvention
-   * standard indentation
-   * standard formating
-   * cleancode (so far as possible)
-   * comment code 
-   
   Version 3.0 december 2024
-   * redesign of the code
-   * add lookup array's and removing the switch statements
+   * complete new redesign of the code.
    * using namespaces and build classes to give this project a clear structure
-   
    
   PlatformIO
   ----------

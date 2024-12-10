@@ -11,21 +11,16 @@
    - comment code.
 
   Version 3.0 december 2024
-   - put all the declarations in a header file
-   - add lookup array's to removed the multiple case statements.  
-   - removed some unnessary ifs
-   - building a Display class 
-   - building a InterruptHandler class
+   - complete new redesign in OO (where posible)
 ***********************************************************************************************************/
 #include <Wire.h>                  // Allows the communication between devices or sensors connected via Two Wire Interface Bus. Specific implementation for nRF52. This Library is needed for si5341 https://docs.arduino.cc/language-reference/en/functions/communication/Wire/
 #include <Rotary.h>                // Arduino library for reading rotary directions that output a 2-bit gray code. Ben  Buxton https://github.com/brianlow/Rotary
 #include <si5351.h>                // A full-featured library for the Si5351 series of clock generator ICs from Silicon Labs  https://github.com/etherkit/Si5351Arduino
-#define IF         455             // Enter your IF frequency, ex: 455 = 455kHz, 10700 = 10.7MHz, 0 = to direct convert receiver or RF generator, + will add and - will subtract IF offfset.
 
 //User librarys
-#include "maintain-data.h"         // Handles the digital input
-#include "display-handler.h"       // Display class   
-#include "rotary-handler.h"        // Handles the Interrupts
+#include "maintain-data.h"         // Set the varaibles activated by the buttons and analogreads 
+#include "display-handler.h"       // Display class maintain the output to LCD screen  
+#include "rotary-handler.h"        // Handles the Interrupts used by the rotary
 #include "input-handler.h"         // Handles the Buttons
 #include "si5351-handler.h"        // Handles the si5351  
 
@@ -51,8 +46,6 @@ void setup() {
   initButtonBandSelector();
 
   MySi5251::si5251Manager.init();
-  MySi5251::si5251Manager.setSi5251Frequency(MyData::dataManager.getFrequency(),
-                                             MyData::dataManager.getInterFrequency());
                              
 }
 

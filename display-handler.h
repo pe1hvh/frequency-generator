@@ -217,7 +217,7 @@ namespace MyDisplay {
             
             display.setCursor(0, 57);
             display.print("SM");
-            for (int x = 1; x < signalMeterRemap + 1; x++) {
+            for (int x = signalMeterRemap; x > 0; x--) {
                 display.fillRect(10 + (5 * x), 58, 2, 6, WHITE);
             }
         }       
