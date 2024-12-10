@@ -25,14 +25,11 @@
 #include "si5351-handler.h"        // Handles the si5351  
 
 
-
-
 /******************************************************************************/
 /*! @brief  inital ssd1305
-            set the initial input
+            set the initial pins
             set start text
             inital the si5351
-            enabled the interrupts
 */
 /******************************************************************************/
 void setup() {
