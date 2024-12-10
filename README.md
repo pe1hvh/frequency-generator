@@ -10,14 +10,10 @@
   
   Changes   
   -------
-   * refactored-code
-   * given all variables meaningful names
-   * standard lowerCamelCase nameconvention
-   * standard indentation
-   * standard formating
-   * cleancode (so far as possible)
-   * comment code 
-
+  Version 3.0 december 2024
+   * complete new redesign of the code.
+   * using namespaces and build classes to give this project a clear structure
+   
   PlatformIO
   ----------
   While using PlatformIO with Visual Code as IDE, I have to re-order the function.
@@ -30,10 +26,6 @@
   For writing cleancode, the Sonarlint plug-in is installed in Visual Code. 
   SonarLint is an open-source code analysis tool that serves several important functions to help developers write cleaner, safer, and higher-quality code. 
   There is no need, for using all sonarlint rules but the most important are enabled.
-  
-  Tested
-  ------
-  Build and Upload is tested also with Arduino IDE 2.3 and Arduino 1.8.19. 
   
   Compatible
   ----------
