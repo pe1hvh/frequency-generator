@@ -254,7 +254,6 @@ namespace MyDisplay {
                 unsigned int k = (frequency % 1000000) / 1000;
                 unsigned int h = (frequency % 1000) / 1;
                 
-                //display.clearDisplay();
                 display.setTextSize(2);
                 char buffer[15] = "";
                 

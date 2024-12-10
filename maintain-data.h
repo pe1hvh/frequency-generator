@@ -15,7 +15,7 @@ namespace MyData {
 
             // variable used by the getters 
             unsigned long frequency     = 7200000;   // The frequency for setting the correct clock frequency possible values ex:  100000,   800000,  1800000,  3650000,  4985000 etc
-            long  interFrequency        = IF;        // The default interFrequency ex: 455 = 455kHz, 10700 = 10.7MHz,  0 = to direct convert receiver or RF generator, + will add and - will subtract IF  offfset.
+            int   interFrequency        = IF;        // The default interFrequency ex: 455 = 455kHz, 10700 = 10.7MHz,  0 = to direct convert receiver or RF generator, + will add and - will subtract IF  offfset.
             bool  rxtxSwitch            = false;     // Rx Tx Switch
             byte  tuneStepValue         = 4;         // The default value otherwise set by the TuneStepButton
             byte  bandSelectorValue     = 7;         // Default 7 otherwise set by the  band selector button. /Enter your initial Band (1-21) at startup, ex: 1 = frequencyGenerator, 2 = 800kHz (MW), 7 = 7.2MHz (40m), 11 = 14.1MHz (20m).
@@ -52,7 +52,7 @@ namespace MyData {
             /*! @brief the public getter for interFrequency 
                 @return interFrequency */
             /********************************************************** */
-            long getInterFrequency() {
+            int getInterFrequency() {
                 return interFrequency;
             }
 
@@ -140,7 +140,6 @@ namespace MyData {
             void setByButtonRxTxSwitch(bool pswitch, long interF) {
                 rxtxSwitch = pswitch;
                 interFrequency= interF;
-
             }    
 
             /********************************************************** */
