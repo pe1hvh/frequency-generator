@@ -130,7 +130,8 @@ namespace MyData {
             void setByButtonBandSelector() {
                 bandSelectorValue++;
                 if (bandSelectorValue > 21) {bandSelectorValue = 1; tuneStepValue = 4; }
-                frequency = pgm_read_dword_near(&frequencyBanden[bandSelectorValue]);
+                frequency   = pgm_read_dword_near(&frequencyBanden[bandSelectorValue]);
+                tunePointer = 0;
             }    
 
             /********************************************************** */
