@@ -64,7 +64,8 @@ void loop() {
   MySi5251::si5251Manager.checkSi5251Changes( MyData::dataManager.getFrequency(),
                                               MyData::dataManager.getInterFrequency() );
 
-  MyDisplay::displayManager.setTemplate(  MyData::dataManager.getTuneStepValue(), 
+  MyDisplay::displayManager.setScreen(  
+                                          MyData::dataManager.getTuneStepValue(), 
                                           MyData::dataManager.getInterFrequency(), 
                                           MyData::dataManager.getFrequency(),
                                           MyData::dataManager.getBandSelector(),

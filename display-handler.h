@@ -50,207 +50,229 @@ namespace MyDisplay {
 
     class Display {
 
-    private:
+        private:
 
-        unsigned long timeNow = 0;          // The current time
-        unsigned int period = 100;          // Used for calculation the performance time .
-        char  bandSelectorTypeDisplay[6];   // The band name for the Display. ex: GEN, MW, 160m 80m etc. 
-        char  tuneStepDisplay[7];           // The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
-   
-    public:
-               
-        /***************************************************************************************/
-        /*! @brief  Initial setup op the display                                               */
-        /***************************************************************************************/
-        void init() {
-            Wire.begin();
-            display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-            display.clearDisplay();
-            display.setTextColor(WHITE);
-            display.display();
-        }
-
-        /***************************************************************************************/
-        /*! @brief  Initial timesetup                                                          */
-        /***************************************************************************************/
-        void setTimeNow() {
-            timeNow = millis();
-        }
-        
-        /***************************************************************************************/
-        /*! @brief  Start text to screen to display                                            */
-        /***************************************************************************************/
-        void setStartupText() {
-            display.setTextSize(1);
-            display.setCursor(13, 18);
-            display.print("Si5351 VFO/RF GEN");
-            display.setCursor(6, 40);
-            display.print("JCR RADIO - Ver 3.0");
-            display.display();
-            delay(2000);
-        }
-        
-        /***************************************************************************************/
-        /*! @brief  Start text to screen to display           
-            @param  tuneStepValue          Value to set the frequency steps 
-            @param  interFrequency         The default interFrequency ex: 455 = 455kHz, 10700 = 10.7MHz,  0 = to direct convert receiver or RF generator, + will add and - will subtract IF  offfset. 
-            @param  frequency              Working frequency
-            @param  bandSelectorValue      Default set by BAND_INIT otherwise set by the  band selector push button. 
-            @param  rxtxSwitch             Transmitter/Receiver     
-            @param  tunePointer            Set the pointer for the tuning display
-            @param  signalMeterRemap       The signal meter remap 
-        */
-        /***************************************************************************************/
-        void setTemplate(
-                        byte tuneStepValue, 
-                        int interFrequency, 
-                        unsigned long frequency,
-                        byte bandSelectorValue,
-                        bool rxtxSwitch, 
-                        byte tunePointer, 
-                        byte signalMeterRemap) {
-                          
-            if(timeNow + period > millis()) {
-                setFormattedFrequency(frequency);    
-                strcpy_P(bandSelectorTypeDisplay, (PGM_P)pgm_read_word(&displayBand[bandSelectorValue]));    
-                strcpy_P(tuneStepDisplay, (PGM_P)pgm_read_word(&tuneStepsDisplay[tuneStepValue]));  
+            unsigned long timeNow = 0;          // The current time
+            unsigned int period = 100;          // Used for calculation the performance time .
+            char  bandSelectorTypeDisplay[6];   // The band name for the Display. ex: GEN, MW, 160m 80m etc. 
+            char  tuneStepDisplay[7];           // The frequency step ex: " 1MHz", "  1Hz", " 10Hz", " 1kHz" ," 5kHz" , "10kHz"
+    
+        public:
                 
+            /***************************************************************************************/
+            /*! @brief  Initial setup op the display                                               */
+            /***************************************************************************************/
+            void init() {
+                Wire.begin();
+                display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+                display.clearDisplay();
                 display.setTextColor(WHITE);
+                display.display();
+            }
+
+            /***************************************************************************************/
+            /*! @brief  Initial timesetup                                                          */
+            /***************************************************************************************/
+            void setTimeNow() {
+                timeNow = millis();
+            }
+            
+            /***************************************************************************************/
+            /*! @brief  Start text to screen to display                                            */
+            /***************************************************************************************/
+            void setStartupText() {
+                display.setTextSize(1);
+                display.setCursor(13, 18);
+                display.print("Si5351 VFO/RF GEN");
+                display.setCursor(6, 40);
+                display.print("JCR RADIO - Ver 3.0");
+                display.display();
+                delay(3000);
+                display.clearDisplay();
+        
+            }
+            
+            /***************************************************************************************/
+            /*! @brief  Start text to screen to display           
+                @param  tuneStepValue          Value to set the frequency steps 
+                @param  interFrequency         The default interFrequency ex: 455 = 455kHz, 10700 = 10.7MHz,  0 = to direct convert receiver or RF generator, + will add and - will subtract IF  offfset. 
+                @param  frequency              Working frequency
+                @param  bandSelectorValue      Default set by BAND_INIT otherwise set by the  band selector push button. 
+                @param  rxtxSwitch             Transmitter/Receiver     
+                @param  tunePointer            Set the pointer for the tuning display
+                @param  signalMeterRemap       The signal meter remap 
+            */
+            /***************************************************************************************/
+            void setScreen(
+                            byte tuneStepValue, 
+                            int interFrequency, 
+                            unsigned long frequency,
+                            byte bandSelectorValue,
+                            bool rxtxSwitch, 
+                            byte tunePointer, 
+                            byte signalMeterRemap) {
+                            
+                if(timeNow + period > millis()) {
+                    display.clearDisplay();
+                
+                    setScreenStatic();
+
+                    setFormattedFrequency(frequency);   
+
+                    strcpy_P(bandSelectorTypeDisplay, (PGM_P)pgm_read_word(&displayBand[bandSelectorValue]));    
+                    strcpy_P(tuneStepDisplay, (PGM_P)pgm_read_word(&tuneStepsDisplay[tuneStepValue]));  
+                    
+                    display.setTextSize(1);
+                    display.setCursor(54, 33);
+                    display.print(tuneStepDisplay);
+                    
+                    display.setCursor(92, 57);
+                    display.print(interFrequency);
+                    display.print("k");
+                    
+                    display.setCursor(110, 23);
+                    display.print(setFrequencyDisplay(frequency));
+
+                    display.setCursor(110, 33);
+                    display.print(setInterFrequentieDisplay(interFrequency));
+
+                    display.setCursor(91, 28);
+                    display.print(setRxTxDisplay(rxtxSwitch));
+                    
+                    display.setTextSize(2);
+                    display.setCursor(0, 25);
+                    display.print(bandSelectorTypeDisplay);
+
+                    setBargraph(tunePointer,signalMeterRemap);
+                
+                    display.display();
+                }    
+            }
+            
+
+        private:
+
+            /***************************************************************************************/
+            /*! @brief  setup the static Screen elements                                          */
+            /***************************************************************************************/
+            void setScreenStatic() {
+                display.setTextColor(WHITE);    
+                display.setTextSize(1);
+
                 display.drawLine(0, 20, 127, 20, WHITE);
                 display.drawLine(0, 43, 127, 43, WHITE);
                 display.drawLine(105, 24, 105, 39, WHITE);
                 display.drawLine(87, 24, 87, 39, WHITE);
                 display.drawLine(87, 48, 87, 63, WHITE);
                 display.drawLine(15, 55, 82, 55, WHITE);
-                
-                display.setTextSize(1);
+                    
                 display.setCursor(59, 23);
                 display.print("STEP");
-                display.setCursor(54, 33);
-                display.print(tuneStepDisplay);
-                
+                    
                 display.setCursor(92, 48);
                 display.print("IF:");
-                display.setCursor(92, 57);
-                display.print(interFrequency);
-                display.print("k");
+
+                display.setCursor(0, 48);
+                display.print("TU");
+
+                display.setCursor(0, 57);
+                display.print("SM");
+    
+            }  
+
+            /***************************************************************************************/
+            /*! @brief  Set the type to kHz or MHz for the display    
+                @param  freq The currenct frequency 
+                @return kHz or MHz 
+            */
+            /***************************************************************************************/
+            char* setFrequencyDisplay(int freq) {
+                char* returnDisplay =(char*)"  ";
+                if (freq < 1000000) { 
+                returnDisplay = (char*)"kHz";
+                } else {
+                returnDisplay = (char*)"MHz";
+                }
+                return returnDisplay;
+            }
+
+            /***************************************************************************************/
+            /*! @brief  Set the interfrequentye for the display     
+                @param  freq The currenct frequency 
+                @return VFO or L O 
+            */
+            /***************************************************************************************/
+            char* setInterFrequentieDisplay(int freq) {
+                char* returnDisplay =(char*)"  ";
+                if (freq == 0) { 
+                    returnDisplay =(char*)"VFO";
+                } else {
+                    returnDisplay=(char*)"L O";
+                }
+                return returnDisplay;
+            }
+
+            /***************************************************************************************/
+            /*! @brief  Set on display TX OR RX    
+                @param  rxtxSwitch true or fals 
+                @return TX or RX 
+            */
+            /***************************************************************************************/
+            char* setRxTxDisplay(bool rxtxSwitch) {
+                char* returnDisplay =(char*)"   "; 
+                if (rxtxSwitch == true){
+                    returnDisplay = (char*)"TX";
+                } else { 
+                    returnDisplay = (char*)"RX";
+                }
+                return returnDisplay;
+            } 
+
+            /***************************************************************************************/
+            /*! @brief  Set on display the recalculated tunepoint    
+                @param  tunePointer      The tune pointer 
+                @param singalMeterRemap  The recalculated tune pointer
+            */
+            /***************************************************************************************/
+            void setBargraph(byte tunePointer, byte signalMeterRemap) {
+                byte y = map(tunePointer, 1, 42, 1, 14);
+                display.setTextSize(1);
+                display.fillRect(10 + (5 * y), 48, 2, 6, WHITE);
                 
-                display.setCursor(110, 23);
-                display.print(setFrequencyDisplay(frequency));
-                display.setCursor(110, 33);
-                display.print(setInterFrequentieDisplay(interFrequency));
-                display.setCursor(91, 28);
-                display.print(setRxTxDisplay(rxtxSwitch));
+                for (int x = signalMeterRemap; x > 0; x--) {
+                    display.fillRect(10 + (5 * x), 58, 2, 6, WHITE);
+                }
+            }       
+
+            /***************************************************************************************/
+            /*! @brief  Set the format of the frequency value on display     
+                @param  frequency        The current frequency 
+            */
+            /***************************************************************************************/
+            void setFormattedFrequency(unsigned long frequency) {
+                unsigned int m = frequency / 1000000;
+                unsigned int k = (frequency % 1000000) / 1000;
+                unsigned int h = (frequency % 1000) / 1;
                 
+                //display.clearDisplay();
                 display.setTextSize(2);
-                display.setCursor(0, 25);
-                display.print(bandSelectorTypeDisplay);
-                setBargraph(tunePointer,signalMeterRemap);
-                display.display();
-            }    
-        }
-        
-   
-    private:
-
-
-        /***************************************************************************************/
-        /*! @brief  Set the type to kHz or MHz for the display    
-            @param  freq The currenct frequency 
-            @return kHz or MHz 
-        */
-        /***************************************************************************************/
-        char* setFrequencyDisplay(int freq) {
-            char* returnDisplay =(char*)"  ";
-            if (freq < 1000000) { 
-               returnDisplay = (char*)"kHz";
-              } else {
-               returnDisplay = (char*)"MHz";
+                char buffer[15] = "";
+                
+                if (m < 1) {
+                    display.setCursor(41, 1);
+                    sprintf(buffer, "%003d.%003d", k, h);
+                } else if (m < 100) {
+                    display.setCursor(5, 1);
+                    sprintf(buffer, "%2d.%003d.%003d", m, k, h);
+                } else if (m >= 100) {
+                    unsigned int h = (frequency % 1000) / 10;
+                    display.setCursor(5, 1);
+                    sprintf(buffer, "%2d.%003d.%02d", m, k, h);
+                }
+                display.print(buffer);
             }
-            return returnDisplay;
-       }
-
-        /***************************************************************************************/
-        /*! @brief  Set the interfrequentye for the display     
-            @param  freq The currenct frequency 
-            @return VFO or L O 
-        */
-        /***************************************************************************************/
-       char* setInterFrequentieDisplay(int freq) {
-            char* returnDisplay =(char*)"  ";
-            if (freq == 0) { 
-                returnDisplay =(char*)"VFO";
-            } else {
-                returnDisplay=(char*)"L O";
-            }
-            return returnDisplay;
-        }
-
-        /***************************************************************************************/
-        /*! @brief  Set on display TX OR RX    
-            @param  rxtxSwitch true or fals 
-            @return TX or RX 
-        */
-        /***************************************************************************************/
-       char* setRxTxDisplay(bool rxtxSwitch) {
-            char* returnDisplay =(char*)"   "; 
-            if (rxtxSwitch == true){
-                returnDisplay = (char*)"TX";
-            } else { 
-                returnDisplay = (char*)"RX";
-            }
-            return returnDisplay;
-        } 
-
-        /***************************************************************************************/
-        /*! @brief  Set on display the recalculated tunepoint    
-            @param  tunePointer      The tune pointer 
-            @param singalMeterRemap  The recalculated tune pointer
-        */
-        /***************************************************************************************/
-        void setBargraph(byte tunePointer, byte signalMeterRemap) {
-            byte y = map(tunePointer, 1, 42, 1, 14);
-            display.setTextSize(1);
-            display.setCursor(0, 48);
-            display.print("TU");
-            display.fillRect(10 + (5 * y), 48, 2, 6, WHITE);
-            
-            display.setCursor(0, 57);
-            display.print("SM");
-            for (int x = signalMeterRemap; x > 0; x--) {
-                display.fillRect(10 + (5 * x), 58, 2, 6, WHITE);
-            }
-        }       
-
-        /***************************************************************************************/
-        /*! @brief  Set the format of the frequency value on display     
-            @param  frequency        The current frequency 
-        */
-        /***************************************************************************************/
-        void setFormattedFrequency(unsigned long frequency) {
-            unsigned int m = frequency / 1000000;
-            unsigned int k = (frequency % 1000000) / 1000;
-            unsigned int h = (frequency % 1000) / 1;
-            
-            display.clearDisplay();
-            display.setTextSize(2);
-            char buffer[15] = "";
-            
-            if (m < 1) {
-                display.setCursor(41, 1);
-                sprintf(buffer, "%003d.%003d", k, h);
-            } else if (m < 100) {
-                display.setCursor(5, 1);
-                sprintf(buffer, "%2d.%003d.%003d", m, k, h);
-            } else if (m >= 100) {
-                unsigned int h = (frequency % 1000) / 10;
-                display.setCursor(5, 1);
-                sprintf(buffer, "%2d.%003d.%02d", m, k, h);
-            }
-            display.print(buffer);
-        }
     };
 
+    Display displayManager;
 
-Display displayManager;
 }

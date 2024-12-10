@@ -13,7 +13,7 @@ namespace MyData {
         
         private:
 
-            // block variable used by the getters
+            // variable used by the getters 
             unsigned long frequency     = 7200000;   // The frequency for setting the correct clock frequency possible values ex:  100000,   800000,  1800000,  3650000,  4985000 etc
             long  interFrequency        = IF;        // The default interFrequency ex: 455 = 455kHz, 10700 = 10.7MHz,  0 = to direct convert receiver or RF generator, + will add and - will subtract IF  offfset.
             bool  rxtxSwitch            = false;     // Rx Tx Switch
@@ -21,7 +21,7 @@ namespace MyData {
             byte  bandSelectorValue     = 7;         // Default 7 otherwise set by the  band selector button. /Enter your initial Band (1-21) at startup, ex: 1 = frequencyGenerator, 2 = 800kHz (MW), 7 = 7.2MHz (40m), 11 = 14.1MHz (20m).
             byte  tunePointer           = 0;         // Default set to left otherwise set by rotary
             uint8_t signalMeterRemap ;               // Remapped and bounded value
-            // end block variable used by the getters
+            // end variable used by the getters
 
             unsigned long frequencyStep = 10;               //The frequency step ex: 1, 10, 1000, 5000, 10000 set by tunestepvalue
             byte  tuneStepValues[7]     = {0,2,3,4,5,6,1};  //The next tunestepValues set by tuneStepValue
