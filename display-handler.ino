@@ -1,4 +1,5 @@
 
+
 namespace MyDisplay {
 
             /***************************************************************************************/
@@ -210,14 +211,14 @@ namespace MyDisplay {
                 
                 if (m < 1) {
                     display.setCursor(41, 1);
-                    sprintf(buffer, "%003d.%003d", k, h);
+                    sprintf(buffer, "%03d.%03d", k, h);
                 } else if (m < 100) {
                     display.setCursor(5, 1);
-                    sprintf(buffer, "%2d.%003d.%003d", m, k, h);
+                    sprintf(buffer, "%2d.%03d.%03d", m, k, h);
                 } else if (m >= 100) {
                     unsigned int h = (frequency % 1000) / 10;
                     display.setCursor(5, 1);
-                    sprintf(buffer, "%2d.%003d.%02d", m, k, h);
+                    sprintf(buffer, "%2d.%03d.%02d", m, k, h);
                 }
                 display.print(buffer);
             }
