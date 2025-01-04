@@ -1,5 +1,4 @@
 
-
 namespace MyDisplay {
 
             /***************************************************************************************/
@@ -225,4 +224,3 @@ namespace MyDisplay {
      
     Screen displayManager ;
 }    
-

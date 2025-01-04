@@ -1,7 +1,7 @@
+
 #include <avr/pgmspace.h>          // needed for to story large array's
 #include <Rotary.h>                // 
 #define IF         455             // Enter your IF frequency, ex: 455 = 455kHz, 10700 = 10.7MHz, 0 = to direct convert receiver or RF generator, + will add and - will subtract IF offfset.
-
 
 const unsigned long frequencySteps[7]   PROGMEM = {0UL,1UL,10UL,1000UL,5000UL,10000UL,1000000UL};     // the frequencySteps corrersponding by the steps    
 const unsigned long frequencyBanden[22] PROGMEM = {0, 100000, 800000, 1800000, 3650000, 4985000,      // the frequency bands

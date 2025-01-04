@@ -1,8 +1,8 @@
+
 #define tunestep   A0        //The pin used by tune step push button.
 #define band       A1        //The pin used by band selector push button.
 #define rx_tx      A2        //The pin used by RX / TX selector switch, RX = switch open, TX = switch closed to GND. When in TX, the IF value is not considered.
 #define adc        A3        //The pin used by Signal Meter A/D input.
-
 
 
 /************************************************* */
@@ -54,3 +54,4 @@ void checkButtonRxTx() {
 void readSignalMeterADC() {
      MyData::dataManager.setByAnalogRead(analogRead(adc));
 }   
+

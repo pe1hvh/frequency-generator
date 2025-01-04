@@ -1,3 +1,4 @@
+
 #include <avr/pgmspace.h>          // needed for to story large array's
 #include <Adafruit_GFX.h>          // Adafruit GFX graphics core library, this is the 'core' class that all our other graphics libraries derive from. https://github.com/adafruit/Adafruit-GFX-Library
 #include <Adafruit_SSD1306.h>      // SSD1306 oled driver library for monochrome 128x64 and 128x32 displays https://github.com/adafruit/Adafruit_SSD1306
@@ -139,3 +140,4 @@ namespace MyDisplay{
      extern Screen displayManager;
 
 }
+
