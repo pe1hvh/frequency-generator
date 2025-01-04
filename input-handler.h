@@ -2,7 +2,7 @@
 #define band       A1        //The pin used by band selector push button.
 #define rx_tx      A2        //The pin used by RX / TX selector switch, RX = switch open, TX = switch closed to GND. When in TX, the IF value is not considered.
 #define adc        A3        //The pin used by Signal Meter A/D input.
-     
+
 
 /************************************************* */
 /*! @brief Initialize TunestepButton               */
@@ -29,10 +29,7 @@ void initButtonRxTx() {
 /*! @brief if TunestepButton pressed  set tunestepvalue and frequencystep   */
 /************************************************************************** */
 void checkButtonTuneStep() {
-      if (digitalRead(tunestep) == LOW) {
-            MyData::dataManager.setByButtonTuneStep();
-            delay(300);
-      }       
+     MyData::dataManager.setByButtonTuneStep(digitalRead(tunestep));
 }
 
 /************************************************************************** */
@@ -40,26 +37,19 @@ void checkButtonTuneStep() {
            if bandselector start again tuneStepValue is set to default      */
 /************************************************************************** */
 void checkButtonBandSelector() {
-     if (digitalRead(band) == LOW) {
-         MyData::dataManager.setByButtonBandSelector();
-         delay(300);
-      }
+     MyData::dataManager.setByButtonBandSelector(digitalRead(band));
 }
 
 /**************************************************************************** */
 /*! @brief if RxTx button  pressed  set rxtxSwitch  and  interFrequency value */
 /**************************************************************************** */
 void checkButtonRxTx() {
-    if (digitalRead(rx_tx) == LOW) {
-         MyData::dataManager.setByButtonRxTxSwitch(true,0);
-    } else { 
-         MyData::dataManager.setByButtonRxTxSwitch(false,IF);
-    }
+     MyData::dataManager.setByButtonRxTxSwitch(digitalRead(rx_tx)); 
 }
 
 /**************************************************************************** */
 /*! @brief read the analog signal for the signal meter                        */
 /**************************************************************************** */
 void readSignalMeterADC() {
-        MyData::dataManager.setByAnalogRead(analogRead(adc));
+     MyData::dataManager.setByAnalogRead(analogRead(adc));
 }   

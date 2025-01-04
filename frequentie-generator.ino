@@ -4,21 +4,20 @@
   and Bargraph S-Meter.  Based on source made by J. CesarSound - ver 2.0 - Feb/2021.
   
   Forked by JA van Hernen
+
+  Version 3.0 december 2024
+   - complete new redesign in OO (where posible)
    - re-code: standard lowerCamelCase nameconvention
    - standard indentation
    - standard formating
    - cleancode (so far as possible)
    - comment code.
+   - split definitions and implementation
 
-  Version 3.0 december 2024
-   - complete new redesign in OO (where posible)
 ***********************************************************************************************************/
-#include <Wire.h>                  // Allows the communication between devices or sensors connected via Two Wire Interface Bus. Specific implementation for nRF52. This Library is needed for si5341 https://docs.arduino.cc/language-reference/en/functions/communication/Wire/
-#include <Rotary.h>                // Arduino library for reading rotary directions that output a 2-bit gray code. Ben  Buxton https://github.com/brianlow/Rotary
-#include <si5351.h>                // A full-featured library for the Si5351 series of clock generator ICs from Silicon Labs  https://github.com/etherkit/Si5351Arduino
 
-//User librarys
-#include "maintain-data.h"         // Set the varaibles activated by the buttons and analogreads 
+//User libraries
+#include "maintain-data.h"         // Set the data variables activated by the buttons, rotaryknob and analogreads 
 #include "display-handler.h"       // Display class maintain the output to LCD screen  
 #include "rotary-handler.h"        // Handles the Interrupts used by the rotary
 #include "input-handler.h"         // Handles the Buttons
@@ -33,10 +32,12 @@
 */
 /******************************************************************************/
 void setup() {
-
+  
   MyDisplay::displayManager.init();
   MyDisplay::displayManager.setStartupText(); //If you hang on startup, comment
   
+  MyData::dataManager.init();
+
   initRotary();
   initButtonRxTx();
   initButtonTuneStep();
@@ -52,7 +53,7 @@ void setup() {
 void loop() {
   
   MyDisplay::displayManager.setTimeNow(); 
-  
+ 
   readSignalMeterADC();
   checkButtonRxTx();
   checkButtonTuneStep();
