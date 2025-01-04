@@ -1,5 +1,6 @@
 #define PCINT2_vect _VECTOR(5)
 
+
 Rotary r = Rotary(2, 3);               // Initialize Rotary opbject r (Type Rotary) a. assign pin 2 and pin 3 b. set Initial state c. set default inverter
 
 void initRotary(){

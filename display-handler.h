@@ -3,6 +3,7 @@
 #include <Adafruit_SSD1306.h>      // SSD1306 oled driver library for monochrome 128x64 and 128x32 displays https://github.com/adafruit/Adafruit_SSD1306
 
 
+
 const char   display_step_0[] PROGMEM = "     ";
 const char   display_step_1[] PROGMEM = "  1Hz";
 const char   display_step_2[] PROGMEM = " 10Hz";
