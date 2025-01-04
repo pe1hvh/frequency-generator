@@ -138,7 +138,7 @@ namespace MyDisplay {
                 @return kHz or MHz 
             */
             /***************************************************************************************/
-            char* Screen::setFrequencyScreen(int freq) {
+            char* Screen::setFrequencyScreen(long freq) {
                 char* returnDisplay =(char*)"  ";
                 if (freq < 1000000) { 
                     returnDisplay = (char*)"kHz";
@@ -154,7 +154,7 @@ namespace MyDisplay {
                 @return VFO or L O 
             */
             /***************************************************************************************/
-            char* Screen::setInterFrequentieScreen(int freq) {
+            char* Screen::setInterFrequentieScreen(long freq) {
                 char* returnDisplay =(char*)"  ";
                 if (freq == 0) { 
                     returnDisplay =(char*)"VFO";
@@ -225,3 +225,4 @@ namespace MyDisplay {
      
     Screen displayManager ;
 }    
+

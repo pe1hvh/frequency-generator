@@ -3,7 +3,6 @@
 #include <Adafruit_SSD1306.h>      // SSD1306 oled driver library for monochrome 128x64 and 128x32 displays https://github.com/adafruit/Adafruit_SSD1306
 
 
-
 const char   display_step_0[] PROGMEM = "     ";
 const char   display_step_1[] PROGMEM = "  1Hz";
 const char   display_step_2[] PROGMEM = " 10Hz";
@@ -103,7 +102,7 @@ namespace MyDisplay{
                 @return kHz or MHz 
             */
             /***************************************************************************************/
-            char* setFrequencyScreen(int freq);
+            char* setFrequencyScreen(long freq);
            
             /***************************************************************************************/
             /*! @brief  Set the interfrequentye for the display     
@@ -111,7 +110,7 @@ namespace MyDisplay{
                 @return VFO or L O 
             */
             /***************************************************************************************/
-            char* setInterFrequentieScreen(int freq);
+            char* setInterFrequentieScreen(long freq);
 
             /***************************************************************************************/
             /*! @brief  Set on display TX OR RX    
