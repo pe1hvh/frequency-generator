@@ -1,4 +1,4 @@
-10khz to 225mhz vfo rf generator
+10kHz to 225MHz VFO / RF Generator
 ==================================
 
 The original code is build in  VSCode and PlatformIO.
