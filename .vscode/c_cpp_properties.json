@@ -1,0 +1,74 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/hans/Documents/GitHub/frequency-generator/include",
+                "/home/hans/Documents/GitHub/frequency-generator/src",
+                "/home/hans/Documents/GitHub/frequency-generator/lib/si5351-handler/src",
+                "/home/hans/Documents/GitHub/frequency-generator/lib/maintain-data/src",
+                "/home/hans/Documents/GitHub/frequency-generator/lib/display-handler/src",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Rotary",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit SSD1306",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit GFX Library",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit BusIO",
+                "/home/hans/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Etherkit Si5351/src",
+                "/home/hans/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/hans/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/hans/.platformio/packages/framework-arduino-avr/variants/standard",
+                "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Unity/src",
+                "/home/hans/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/hans/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/hans/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/hans/Documents/GitHub/frequency-generator/include",
+                    "/home/hans/Documents/GitHub/frequency-generator/src",
+                    "/home/hans/Documents/GitHub/frequency-generator/lib/si5351-handler/src",
+                    "/home/hans/Documents/GitHub/frequency-generator/lib/maintain-data/src",
+                    "/home/hans/Documents/GitHub/frequency-generator/lib/display-handler/src",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Rotary",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit SSD1306",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit GFX Library",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Adafruit BusIO",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Etherkit Si5351/src",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/variants/standard",
+                    "/home/hans/Documents/GitHub/frequency-generator/.pio/libdeps/uno/Unity/src",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/hans/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60117",
+                "ARDUINO_AVR_UNO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerPath": "/home/hans/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
